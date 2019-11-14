@@ -1,5 +1,7 @@
 const crypto = require('crypto')
 const Sequelize = require('sequelize')
+
+const Tag = require('./tag')
 const db = require('../db')
 
 const User = db.define('user', {
@@ -36,6 +38,15 @@ module.exports = User
  */
 User.prototype.correctPassword = function(candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt()) === this.password()
+}
+
+User.prototype.getAllTags = function() {
+  let posts = this.getPosts({include: [{model: Tag}]}).reduce(
+    (accum, post) => [...accum, ...post.tags],
+    []
+  )
+
+  return posts
 }
 
 /**
