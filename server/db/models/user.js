@@ -1,5 +1,6 @@
 const crypto = require('crypto')
 const Sequelize = require('sequelize')
+const {Post, Tag} = require('./index')
 const db = require('../db')
 
 const User = db.define('user', {
@@ -36,6 +37,10 @@ module.exports = User
  */
 User.prototype.correctPassword = function(candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt()) === this.password()
+}
+
+User.prototype.getTags = function() {
+  Post.findAll({where: {userId: this.id}, include: [{model: Tag}]})
 }
 
 /**
