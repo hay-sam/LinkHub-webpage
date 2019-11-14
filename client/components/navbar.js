@@ -3,29 +3,31 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {logout} from '../store'
+import Navbar from 'react-bootstrap/Navbar'
+import Nav from 'react-bootstrap/Nav'
 
-const Navbar = ({handleClick, isLoggedIn}) => (
-  <div>
-    <h1>BOILERMAKER</h1>
-    <nav>
+const NavbarTemp = ({handleClick, isLoggedIn}) => (
+  <Navbar expand="sm">
+    <Navbar.Brand>LinkHub</Navbar.Brand>
+    <Navbar.Toggle aria-controls="basic-navbar-nav" />
+    <Navbar.Collapse id="basic-navbar-nav">
       {isLoggedIn ? (
-        <div>
+        <Nav>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
           <a href="#" onClick={handleClick}>
             Logout
           </a>
-        </div>
+        </Nav>
       ) : (
-        <div>
+        <Nav>
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
-        </div>
+        </Nav>
       )}
-    </nav>
-    <hr />
-  </div>
+    </Navbar.Collapse>
+  </Navbar>
 )
 
 /**
@@ -45,7 +47,7 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(mapState, mapDispatch)(Navbar)
+export default connect(mapState, mapDispatch)(NavbarTemp)
 
 /**
  * PROP TYPES
