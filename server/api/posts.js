@@ -52,13 +52,36 @@ router.delete('/:postId', async (req, res, next) => {
   }
 })
 
-router.put('/:postId', async (req, res, next) => {
+router.get('/:postId/tags', async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.postId)
+    let tags = await post.getTags()
+    res.status(201).send(tags)
+  } catch (err) {
+    console.error(err)
+    next(err)
+  }
+})
+
+router.post('/:postId/tags', async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.postId)
     let tags = await req.body.tags.map(async tag => {
       await Tag.findOne({where: {content: tag}})
     })
-    post.setTags(tags)
+    post.addTags(tags)
+    res.sendStatus(201)
+  } catch (err) {
+    console.error(err)
+    next(err)
+  }
+})
+
+router.delete('/:postId/tags/:tagId', async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.postId)
+    let tag = await Tag.findOne({where: {content: tag}})
+    post.removeTag(tag)
     res.sendStatus(201)
   } catch (err) {
     console.error(err)
