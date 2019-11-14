@@ -43,10 +43,7 @@ async function seed() {
     posts[4].addTags([tags[0], tags[2], tags[4]]),
     posts[5].addTags([tags[1], tags[4], tags[0], tags[2], tags[3]])
   ])
-  // const info = await users[0].getAllTags()
-  // const infoObj = {}
-  // info.forEach(tag=>{infoObj[tag.id]= tag.content})
-  // console.log(Object.entries(infoObj))
+
   console.log(
     `seeded ${users.length} users, ${tags.length} tags, and ${
       posts.length

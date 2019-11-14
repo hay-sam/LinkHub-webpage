@@ -15,3 +15,15 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
+
+router.get('/:userId/tags', async (req, res, next) => {
+  const user = await User.findByPk(req.params.userId)
+  const info = await user.getAllTags()
+  const infoObj = {}
+  info.forEach(tag => {
+    infoObj[tag.id] = tag
+  })
+  res.status(200).send(Object.values(infoObj))
+})
+
+router.use('/:userId/posts', require('./posts'))
