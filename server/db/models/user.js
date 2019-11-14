@@ -1,6 +1,7 @@
 const crypto = require('crypto')
 const Sequelize = require('sequelize')
-const {Post, Tag} = require('./index')
+
+const Tag = require('./tag')
 const db = require('../db')
 
 const User = db.define('user', {
@@ -39,8 +40,13 @@ User.prototype.correctPassword = function(candidatePwd) {
   return User.encryptPassword(candidatePwd, this.salt()) === this.password()
 }
 
-User.prototype.getTags = function() {
-  Post.findAll({where: {userId: this.id}, include: [{model: Tag}]})
+User.prototype.getAllTags = function() {
+  let posts = this.getPosts({include: [{model: Tag}]}).reduce(
+    (accum, post) => [...accum, ...post.tags],
+    []
+  )
+
+  return posts
 }
 
 /**

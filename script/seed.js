@@ -20,17 +20,33 @@ async function seed() {
   ])
 
   const posts = await Promise.all([
-    Post.create({url: 'https://httpstatusdogs.com/201-created'}),
-    Post.create({url: 'https://httpstatusdogs.com/100-continue'}),
-    Post.create({url: 'https://httpstatusdogs.com/202-accepted'}),
+    Post.create({url: 'https://httpstatusdogs.com/201-created', userId: 1}),
+    Post.create({url: 'https://httpstatusdogs.com/100-continue', userId: 2}),
+    Post.create({url: 'https://httpstatusdogs.com/202-accepted', userId: 2}),
     Post.create({
-      url: 'https://httpstatusdogs.com/203-non-authoritative-information'
+      url: 'https://httpstatusdogs.com/203-non-authoritative-information',
+      userId: 1
     }),
-    Post.create({url: 'https://httpstatusdogs.com/204-no-content'}),
-    Post.create({url: 'https://httpstatusdogs.com/206-partial-content'}),
-    Post.create({url: 'https://httpstatusdogs.com/207-multi-status'})
+    Post.create({url: 'https://httpstatusdogs.com/204-no-content', userId: 1}),
+    Post.create({
+      url: 'https://httpstatusdogs.com/206-partial-content',
+      userId: 2
+    }),
+    Post.create({url: 'https://httpstatusdogs.com/207-multi-status', userId: 1})
   ])
 
+  await Promise.all([
+    posts[0].addTag(tags[0]),
+    posts[1].addTags([tags[1], tags[2]]),
+    posts[2].addTags([tags[1], tags[4], tags[2], tags[3]]),
+    posts[3].addTags([tags[1], tags[3], tags[0], tags[2]]),
+    posts[4].addTags([tags[0], tags[2], tags[4]]),
+    posts[5].addTags([tags[1], tags[4], tags[0], tags[2], tags[3]])
+  ])
+  // const info = await users[0].getAllTags()
+  // const infoObj = {}
+  // info.forEach(tag=>{infoObj[tag.id]= tag.content})
+  // console.log(Object.entries(infoObj))
   console.log(
     `seeded ${users.length} users, ${tags.length} tags, and ${
       posts.length
