@@ -32,7 +32,26 @@ async function seed() {
       url: 'https://httpstatusdogs.com/206-partial-content',
       userId: 2
     }),
-    Post.create({url: 'https://httpstatusdogs.com/207-multi-status', userId: 1})
+    Post.create({
+      url: 'https://httpstatusdogs.com/207-multi-status',
+      userId: 1
+    }),
+    Post.create({
+      url:
+        'https://react-bootstrap.netlify.com/components/cards/#title-text-and-links',
+      userId: 1
+    }),
+    Post.create({
+      url:
+        'https://www.washingtonpost.com/world/2019/11/14/venice-is-underwater-other-major-european-cities-could-be-next/',
+      userId: 1
+    }),
+    Post.create({
+      url:
+        'https://cdn-04.independent.ie/regionals/newrossstandard/lifestyle/article38571541.ece/70abc/AUTOCROP/w620/2019-10-08_wex_53943643_I1.JPG',
+      userId: 1
+    }),
+    Post.create({url: 'https://www.youtube.com/watch?v=LCkneiz2JPo', userId: 1})
   ])
 
   await Promise.all([

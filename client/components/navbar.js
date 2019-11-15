@@ -7,10 +7,10 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 
 const NavbarTemp = ({handleClick, isLoggedIn}) => (
-  <Navbar expand="sm">
+  <Navbar expand="sm" bg="dark" variant="dark" sticky="top">
     <Navbar.Brand>LinkHub</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
-    <Navbar.Collapse id="basic-navbar-nav">
+    <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
       {isLoggedIn ? (
         <Nav>
           {/* The navbar will show these links after you log in */}
