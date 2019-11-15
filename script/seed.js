@@ -51,7 +51,14 @@ async function seed() {
         'https://cdn-04.independent.ie/regionals/newrossstandard/lifestyle/article38571541.ece/70abc/AUTOCROP/w620/2019-10-08_wex_53943643_I1.JPG',
       userId: 1
     }),
-    Post.create({url: 'https://www.youtube.com/watch?v=LCkneiz2JPo', userId: 1})
+    Post.create({
+      url: 'https://www.youtube.com/watch?v=LCkneiz2JPo',
+      userId: 1
+    }),
+    Post.create({
+      url: 'https://www.livewellbakeoften.com/classic-apple-pie/',
+      userId: 1
+    })
   ])
 
   await Promise.all([

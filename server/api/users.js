@@ -1,4 +1,5 @@
 const router = require('express').Router()
+
 const {User, Post, Tag} = require('../db/models')
 module.exports = router
 
@@ -39,7 +40,10 @@ router.get('/:userId/posts', async (req, res, next) => {
 
 router.post('/:userId/posts', async (req, res, next) => {
   try {
-    const post = await Post.create({url: req.body.url})
+    const post = await Post.create({
+      url: req.body.url,
+      userId: req.params.userId
+    })
     let tags = req.body.tags
     tags = await tags.map(async tag => {
       await Tag.findOrCreate({where: {content: tag}})
