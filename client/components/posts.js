@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getPosts} from '../store/posts'
+import {withRouter} from 'react-router-dom'
 
 import PostItem from './post-item'
 
@@ -15,6 +16,13 @@ class Posts extends React.Component {
   }
   render() {
     let {posts} = this.props
+    if (this.props.match.params.tagContent) {
+      posts = posts.filter(post => {
+        return post.tags.some(tag => {
+          return tag.content === this.props.match.params.tagContent
+        })
+      })
+    }
     return (
       <div className="all-posts">
         {posts.map(post => (
@@ -34,4 +42,4 @@ const mapDispatchToProps = dispatch => ({
   getPosts: id => dispatch(getPosts(id))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Posts)
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Posts))

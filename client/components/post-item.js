@@ -1,5 +1,6 @@
 import React from 'react'
 import Card from 'react-bootstrap/Card'
+import {Link} from 'react-router-dom'
 
 const PostItem = ({post}) => {
   const tags = post.tags
@@ -13,12 +14,15 @@ const PostItem = ({post}) => {
         <blockquote className="font-weight-light text-muted">
           {post.description}
         </blockquote>
-        {tags.map(tag => (
-          <Card.Link href="#" key={tag.id}>
-            {tag.content}
-          </Card.Link>
-        ))}
       </Card.Body>
+      <Card.Footer className="post-tags">
+        <i className="fas fa-tags" />
+        {tags.map(tag => (
+          <Link className="tag-item" to={`/posts/${tag.content}`} key={tag.id}>
+            {tag.content}
+          </Link>
+        ))}
+      </Card.Footer>
     </Card>
   )
 }

@@ -37,11 +37,23 @@ form div {
   background-color: thistle;
   height: 88.5vh;
   overflow-y: auto;
+  width: -webkit-fill-available;
 }
 
 .post-item {
   flex: 0 0 30%;
   margin: 10px;
+}
+
+.post-tags {
+  overflow-x: auto;
+}
+.tag-item {
+  margin: 0px 5px;
+}
+
+.tag-link a {
+  color: white;
 }
 
 html {
