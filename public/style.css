@@ -19,3 +19,57 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+
+.main {
+  display: flex;
+}
+.sidebar {
+  width: 200px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  height: 88.5vh;
+}
+.all-posts {
+  flex-shrink: 1;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  background-color: thistle;
+  height: 88.5vh;
+  overflow-y: auto;
+  width: -webkit-fill-available;
+}
+
+.post-item {
+  flex: 0 0 30%;
+  margin: 10px;
+}
+
+.post-tags {
+  overflow-x: auto;
+}
+.tag-item {
+  margin: 0px 5px;
+}
+
+.tag-link a {
+  color: white;
+}
+
+html {
+  font-size: 0.45 rem;
+}
+
+@media (max-width: 1000px) {
+  .post-item {
+    flex: 0 0 47%;
+    margin: 10px;
+  }
+}
+
+@media (max-width: 875px) {
+  .post-item {
+    flex: 0 0 95%;
+    margin: 10px;
+  }
+}
