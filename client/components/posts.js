@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {getPosts} from '../store/posts'
-import {withRouter} from 'react-router-dom'
+import {withRouter, Link} from 'react-router-dom'
 import PostItem from './post-item'
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
@@ -44,9 +44,19 @@ class Posts extends React.Component {
     }
     return (
       <div className="all-posts">
-        {posts.map(post => (
-          <PostItem post={post} key={post.id} className="post-item" />
-        ))}
+        {posts.length > 0 ? (
+          posts.map(post => (
+            <PostItem post={post} key={post.id} className="post-item" />
+          ))
+        ) : (
+          <div style={{textAlign: 'center'}}>
+            <h3>Hmm... no posts found matching that tag</h3>
+            <h4>
+              Click <Link to="/posts">HERE</Link> to view all posts!
+            </h4>
+          </div>
+        )}
+
         <Fab
           color="primary"
           aria-label="add"
