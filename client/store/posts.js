@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import {getTags} from './tags'
 // Action Types
 const GOT_POSTS = 'GOT_POSTS'
 const ADDED_POST = 'ADDED_POST'
@@ -24,6 +24,14 @@ export const getPosts = userId => {
   return async dispatch => {
     const {data} = await axios.get(`/api/users/${userId}/posts`)
     dispatch(gotPosts(data))
+  }
+}
+
+export const addPost = (userId, post) => {
+  return async (dispatch, state) => {
+    const {data} = await axios.post(`/api/users/${userId}/posts`, post)
+    dispatch(addedPost(data))
+    dispatch(getTags(userId))
   }
 }
 

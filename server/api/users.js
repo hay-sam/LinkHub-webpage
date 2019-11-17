@@ -44,12 +44,18 @@ router.post('/:userId/posts', async (req, res, next) => {
       url: req.body.url,
       userId: req.params.userId
     })
-    let tags = req.body.tags
-    tags = await tags.map(async tag => {
-      await Tag.findOrCreate({where: {content: tag}})
+    let tagsArr = await Promise.all(
+      req.body.tags.map(async tag => {
+        let theTag = await Tag.findOrCreate({where: {content: tag}})
+        return theTag[0]
+      })
+    )
+    await post.setTags(tagsArr)
+    let withTags = await Post.findOne({
+      where: {url: req.body.url, userId: req.params.userId},
+      include: [{model: Tag}]
     })
-    await post.addTags(tags)
-    res.sendStatus(201)
+    res.status(201).send(withTags)
   } catch (err) {
     console.error(err)
     next(err)
@@ -62,6 +68,28 @@ router.get('/:userId/posts/:postId', async (req, res, next) => {
       include: [{model: Tag}]
     })
     res.status(201).send(post)
+  } catch (err) {
+    console.error(err)
+    next(err)
+  }
+})
+
+router.put('/:userId/posts/:postId', async (req, res, next) => {
+  try {
+    const post = await Post.findByPk(req.params.postId)
+    post.update({title: req.body.title, description: req.body.description})
+    let tagsArr = await Promise.all(
+      req.body.tags.map(async tag => {
+        let theTag = await Tag.findOrCreate({where: {content: tag}})
+        return theTag[0]
+      })
+    )
+    await post.setTags(tagsArr)
+    let withTags = await Post.findOne({
+      where: {url: req.body.url, userId: req.params.userId},
+      include: [{model: Tag}]
+    })
+    res.status(201).send(withTags)
   } catch (err) {
     console.error(err)
     next(err)
