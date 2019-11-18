@@ -38,13 +38,16 @@
       "git add"
     ]
   },
-  "author": "Fullstack Academy of Code",
+  "author": "Haley Sambursky, Fullstack Academy of Code",
   "license": "MIT",
   "dependencies": {
+    "@material-ui/core": "^4.6.1",
+    "@material-ui/icons": "^4.5.1",
     "axios": "^0.19.0",
     "bootstrap": "^4.3.1",
     "compression": "^1.7.3",
     "connect-session-sequelize": "^6.0.0",
+    "copy-to-clipboard": "^3.2.0",
     "express": "^4.16.4",
     "express-session": "^1.15.1",
     "history": "^4.9.0",
@@ -60,6 +63,7 @@
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.1",
     "react-router-dom": "^5.0.0",
+    "react-select": "^3.0.8",
     "redux": "^4.0.1",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.3.0",

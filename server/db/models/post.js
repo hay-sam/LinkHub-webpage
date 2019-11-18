@@ -29,7 +29,7 @@ const Post = db.define('post', {
   }
 })
 
-Post.beforeValidate(post => {
+Post.beforeCreate(post => {
   return LinkPreview.getPreview(post.url).then(preview => {
     post.contentType = preview.contentType
     if (preview.images) post.image = preview.images[0]

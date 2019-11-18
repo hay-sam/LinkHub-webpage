@@ -7,7 +7,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 
 const NavbarTemp = ({handleClick, isLoggedIn}) => (
-  <Navbar expand="sm" bg="dark" variant="dark" sticky="top">
+  <Navbar bg="dark" variant="dark" sticky="top">
     <Navbar.Brand>LinkHub</Navbar.Brand>
     <Navbar.Toggle aria-controls="basic-navbar-nav" />
     <Navbar.Collapse id="basic-navbar-nav" className="justify-content-end">
