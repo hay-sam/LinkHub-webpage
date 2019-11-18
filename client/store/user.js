@@ -1,5 +1,6 @@
 import axios from 'axios'
 import history from '../history'
+import secrets from '../../secrets'
 
 /**
  * ACTION TYPES
@@ -41,6 +42,13 @@ export const auth = (email, password, method) => async dispatch => {
   try {
     dispatch(getUser(res.data))
     history.push('/posts')
+    chrome.runtime.sendMessage(
+      process.env.EXTENSION_ID,
+      {openUrlInEditor: url},
+      function(response) {
+        if (!response.success) handleError(url)
+      }
+    )
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
