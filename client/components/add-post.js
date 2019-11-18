@@ -72,7 +72,7 @@ class AddPost extends React.Component {
             options={tagOptions}
           />
           <Button color="primary" type="submit">
-            Submit Changes
+            Save Link
           </Button>
         </form>
         <DialogActions>
