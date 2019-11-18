@@ -91,12 +91,12 @@ class EditPost extends React.Component {
             onChange={this.handleTags}
             options={this.tagOptions}
           />
-          <Button color="primary" type="submit">
+          <Button color="primary" variant="outlined" type="submit">
             Submit Changes
           </Button>
         </form>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} variant="outlined" color="primary">
             Cancel
           </Button>
         </DialogActions>
