@@ -76,17 +76,20 @@ router.get('/:userId/posts/:postId', async (req, res, next) => {
 
 router.put('/:userId/posts/:postId', async (req, res, next) => {
   try {
-    const post = await Post.findByPk(req.params.postId)
-    post.update({title: req.body.title, description: req.body.description})
+    let post = await Post.findByPk(req.params.postId)
+    let postNew = await post.update(
+      {title: req.body.title, description: req.body.description},
+      {fields: ['title', 'description']}
+    )
+    postNew = await postNew.save()
     let tagsArr = await Promise.all(
       req.body.tags.map(async tag => {
         let theTag = await Tag.findOrCreate({where: {content: tag}})
         return theTag[0]
       })
     )
-    await post.setTags(tagsArr)
-    let withTags = await Post.findOne({
-      where: {url: req.body.url, userId: req.params.userId},
+    await postNew.setTags(tagsArr)
+    let withTags = await Post.findByPk(req.params.postId, {
       include: [{model: Tag}]
     })
     res.status(201).send(withTags)

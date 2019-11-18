@@ -89,6 +89,7 @@ class PostItem extends React.Component {
           open={this.state.openDialog}
           handleClickOpen={this.handleClickOpen}
           handleClose={this.handleClose}
+          post={this.post}
         />
         <Snackbar
           anchorOrigin={{
@@ -121,7 +122,8 @@ class PostItem extends React.Component {
 }
 
 const mapState = state => ({
-  userId: state.user.id
+  userId: state.user.id,
+  posts: state.user.posts
 })
 
 const mapDispatch = dispatch => ({

@@ -15,43 +15,44 @@ const style = {
 class EditPost extends React.Component {
   constructor(props) {
     super(props)
-    this.state = {
-      title: '',
-      description: '',
-      tags: []
-    }
+    this.postTags = this.props.post.tags
+    this.tagOptions = this.props.tags.map(tag => ({
+      label: tag.content,
+      value: tag.content
+    }))
+    this.defaultTags = this.tagOptions.filter(tagObj => {
+      return this.postTags.findIndex(tag => tag.content === tagObj.value) >= 0
+    })
     this.handleChange = this.handleChange.bind(this)
     this.handleTags = this.handleTags.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.state = {
+      title: this.props.post.title,
+      description: this.props.post.description,
+      tags: this.defaultTags
+    }
   }
   handleChange(event) {
-    console.log('target:', event.target.name)
-    console.log('value:', event.target.value)
-    console.log('state', this.state)
     this.setState({...this.state, [event.target.name]: event.target.value})
-    console.log('state', this.state)
   }
   handleTags(event) {
-    console.log('state', this.state)
     this.setState({...this.state, tags: event})
-    console.log('state', this.state)
   }
   handleSubmit(event) {
     event.preventDefault()
     event.target.disabled = true
     let tags = this.state.tags.map(tag => tag.value)
-    const dispatchBody = {url: this.state.url, tags}
-    this.props.addPost(this.props.userId, dispatchBody)
+    const dispatchBody = {
+      title: this.state.title,
+      description: this.state.description,
+      tags
+    }
+    this.props.editPost(this.props.userId, this.props.post.id, dispatchBody)
     this.props.handleClose()
   }
 
   render() {
-    const tags = this.props.tags
     let {handleClose, open} = this.props
-    let tagOptions = tags.map(tag => ({
-      label: tag.content,
-      value: tag.content
-    }))
     return (
       <Dialog
         open={open}
@@ -60,23 +61,34 @@ class EditPost extends React.Component {
         fullWidth={true}
         maxWidth="lg"
       >
-        <DialogTitle id="Add a new Link">Subscribe</DialogTitle>
+        <DialogTitle id="form-dialog-title">Edit Link preview</DialogTitle>
         <form onSubmit={this.handleSubmit} style={style}>
           <TextField
             required
-            value={this.state.url}
+            value={this.state.title}
             onChange={event => this.handleChange(event)}
             id="standard-required"
-            label="URL"
-            name="url"
-            placeholder="Enter the link you'd like to save!"
+            label="Title"
+            name="title"
+            placeholder="Link Title"
+            margin="normal"
+          />
+          <TextField
+            required
+            value={this.state.description}
+            onChange={event => this.handleChange(event)}
+            id="standard-required"
+            label="Description"
+            name="description"
+            placeholder="Link Description"
             margin="normal"
           />
           <CreatableSelect
             isMulti
+            defaultValue={this.defaultTags}
             name="tags"
             onChange={this.handleTags}
-            options={tagOptions}
+            options={this.tagOptions}
           />
           <Button color="primary" type="submit">
             Submit Changes
@@ -97,6 +109,6 @@ const mapState = state => ({
   userId: state.user.id
 })
 const mapDispatch = dispatch => ({
-  addPost: (userId, postId, post) => dispatch(editPost(userId, postId, post))
+  editPost: (userId, postId, post) => dispatch(editPost(userId, postId, post))
 })
 export default connect(mapState, mapDispatch)(EditPost)

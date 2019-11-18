@@ -24,16 +24,10 @@ class AddPost extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleChange(event) {
-    console.log('target:', event.target.name)
-    console.log('value:', event.target.value)
-    console.log('state', this.state)
     this.setState({...this.state, [event.target.name]: event.target.value})
-    console.log('state', this.state)
   }
   handleTags(event) {
-    console.log('state', this.state)
     this.setState({...this.state, tags: event})
-    console.log('state', this.state)
   }
   handleSubmit(event) {
     event.preventDefault()
@@ -59,7 +53,7 @@ class AddPost extends React.Component {
         fullWidth={true}
         maxWidth="lg"
       >
-        <DialogTitle id="Add a new Link">Subscribe</DialogTitle>
+        <DialogTitle id="form-dialog-title">Save a new Link!</DialogTitle>
         <form onSubmit={this.handleSubmit} style={style}>
           <TextField
             required

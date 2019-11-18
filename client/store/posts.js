@@ -47,10 +47,7 @@ export const addPost = (userId, post) => {
 
 export const editPost = (userId, postId, post) => {
   return async (dispatch, state) => {
-    const {data} = await axios.post(
-      `/api/users/${userId}/posts/${postId}`,
-      post
-    )
+    const {data} = await axios.put(`/api/users/${userId}/posts/${postId}`, post)
     dispatch(editedPost(data))
     dispatch(getTags(userId))
   }
