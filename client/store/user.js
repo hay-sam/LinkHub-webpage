@@ -61,6 +61,15 @@ export const logout = () => async dispatch => {
     await axios.post('/auth/logout')
     dispatch(removeUser())
     history.push('/login')
+    chrome.runtime.sendMessage(
+      'ndagcihhggglnkamaoocdancfjmngfef',
+      {action: 'loggedOut'},
+      {includeTlsChannelId: true},
+      function(response) {
+        if (!response.success) console.log('something went wrong')
+        else console.log('success')
+      }
+    )
   } catch (err) {
     console.error(err)
   }
