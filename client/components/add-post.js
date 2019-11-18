@@ -35,6 +35,7 @@ class AddPost extends React.Component {
     let tags = this.state.tags.map(tag => tag.value)
     const dispatchBody = {url: this.state.url, tags}
     this.props.addPost(this.props.userId, dispatchBody)
+    this.setState({url: '', tags: []})
     this.props.handleClose()
   }
 
@@ -71,12 +72,12 @@ class AddPost extends React.Component {
             onChange={this.handleTags}
             options={tagOptions}
           />
-          <Button color="primary" type="submit">
+          <Button color="primary" variant="outlined" type="submit">
             Save Link
           </Button>
         </form>
         <DialogActions>
-          <Button onClick={handleClose} color="primary">
+          <Button onClick={handleClose} variant="outlined" color="primary">
             Cancel
           </Button>
         </DialogActions>
