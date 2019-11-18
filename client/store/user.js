@@ -1,6 +1,6 @@
+/*global chrome */
 import axios from 'axios'
 import history from '../history'
-import secrets from '../../secrets'
 
 /**
  * ACTION TYPES
@@ -43,10 +43,12 @@ export const auth = (email, password, method) => async dispatch => {
     dispatch(getUser(res.data))
     history.push('/posts')
     chrome.runtime.sendMessage(
-      process.env.EXTENSION_ID,
-      {openUrlInEditor: url},
+      'ndagcihhggglnkamaoocdancfjmngfef',
+      {action: 'loggedIn', userId: res.data.id},
+      {includeTlsChannelId: true},
       function(response) {
-        if (!response.success) handleError(url)
+        if (!response.success) console.log('something went wrong')
+        else console.log('success')
       }
     )
   } catch (dispatchOrHistoryErr) {
