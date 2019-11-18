@@ -74,6 +74,7 @@ class EditPost extends React.Component {
             margin="normal"
           />
           <TextField
+            multiline
             required
             value={this.state.description}
             onChange={event => this.handleChange(event)}
