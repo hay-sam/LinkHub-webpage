@@ -26,6 +26,15 @@ export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
     dispatch(getUser(res.data || defaultUser))
+    chrome.runtime.sendMessage(
+      'ndagcihhggglnkamaoocdancfjmngfef',
+      {action: 'loggedIn', userId: res.data.id},
+      {includeTlsChannelId: true},
+      function(response) {
+        if (!response.success) console.log('something went wrong')
+        else console.log('success')
+      }
+    )
   } catch (err) {
     console.error(err)
   }
