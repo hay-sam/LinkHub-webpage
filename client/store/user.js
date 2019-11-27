@@ -1,6 +1,7 @@
 /*global chrome */
 import axios from 'axios'
 import history from '../history'
+import secrets from '../../secrets'
 
 /**
  * ACTION TYPES
@@ -27,7 +28,7 @@ export const me = () => async dispatch => {
     const res = await axios.get('/auth/me')
     dispatch(getUser(res.data || defaultUser))
     chrome.runtime.sendMessage(
-      'ndagcihhggglnkamaoocdancfjmngfef',
+      process.env.EXTENSION_ID,
       {action: 'loggedIn', userId: res.data.id},
       {includeTlsChannelId: true},
       function(response) {
