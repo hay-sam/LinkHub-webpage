@@ -1,7 +1,7 @@
 {
   "name": "stackathon",
   "version": "2.0.0",
-  "description": "Some boilerplate code to get you started - get shakin'!",
+  "description": "A Hub for your Links",
   "engines": {
     "node": ">= 7.0.0"
   },
@@ -38,7 +38,7 @@
       "git add"
     ]
   },
-  "author": "Haley Sambursky, Fullstack Academy of Code",
+  "author": "Haley Sambursky",
   "license": "MIT",
   "dependencies": {
     "@material-ui/core": "^4.6.1",

@@ -1,5 +1,7 @@
 body {
   font-family: sans-serif;
+  height: 100vh;
+  margin: 0;
 }
 
 a {
@@ -19,15 +21,27 @@ form div {
   margin: 1em;
   display: inline-block;
 }
+#title {
+  color: white;
+}
+
+#everything {
+  flex-flow: column;
+}
+#navbar {
+  height: 80px;
+}
 
 .main {
   display: flex;
+  flex: 1 1 90%;
+  height: calc(100vh - 80px);
+  margin: 0;
 }
 .sidebar {
   width: 200px;
   flex-grow: 0;
   flex-shrink: 0;
-  height: 88.5vh;
 }
 .all-posts {
   flex-shrink: 1;
@@ -35,7 +49,6 @@ form div {
   flex-wrap: wrap;
   justify-content: space-around;
   background-color: thistle;
-  height: 88.5vh;
   overflow-y: auto;
   width: -webkit-fill-available;
 }
@@ -43,6 +56,7 @@ form div {
 .post-item {
   flex: 0 0 30%;
   margin: 10px;
+  align-content: flex-start;
 }
 
 .tag-item {
