@@ -1,5 +1,5 @@
 body {
-  font-family: sans-serif;
+  font-family: 'Roboto', sans-serif;
   height: 100vh;
   margin: 0;
 }
@@ -30,6 +30,9 @@ form div {
 }
 #navbar {
   height: 80px;
+}
+#navbar a {
+  color: white;
 }
 
 .main {
@@ -70,7 +73,31 @@ form div {
 html {
   font-size: 0.45 rem;
 }
-
+#home {
+  background-color: thistle;
+  height: calc(100vh - 80px);
+  text-align: center;
+}
+#home-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+#home-content a {
+  color: black;
+  text-decoration: underline;
+}
+#home-content a:hover {
+  color: blue;
+}
+#home-logo {
+  height: 25vh;
+  width: auto;
+  padding: 10px;
+  margin: 5px;
+  min-height: 140px;
+}
 @media (max-width: 1000px) {
   .post-item {
     flex: 0 0 47%;
