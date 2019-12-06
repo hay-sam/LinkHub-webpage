@@ -24,6 +24,7 @@ const AuthForm = props => {
             label="email"
             name="email"
           />
+          <br />
           <TextField
             required
             id="outlined-required"
@@ -32,13 +33,19 @@ const AuthForm = props => {
             type="password"
             name="password"
           />
+          <br />
           <Button variant="outlined" type="submit">
             {displayName}
           </Button>
           {error && error.response && <div> {error.response.data} </div>}
         </form>
       </Paper>
-      <a href="/auth/google">{displayName} with Google</a>
+      <br />
+      <div style={{backgroundColor: 'white', borderRadius: '5px'}}>
+        <Button href="/auth/google" variant="outlined" id="googleButton">
+          {displayName} with Google
+        </Button>
+      </div>
     </div>
   )
 }

@@ -4,7 +4,9 @@ body {
   margin: 0;
   background-color: thistle;
 }
-
+input.auth-input {
+  margin: 10px;
+}
 a {
   text-decoration: none;
 }
@@ -36,6 +38,7 @@ nav a {
 }
 .sidebar {
   width: 200px;
+  padding: 10px;
   flex-grow: 0;
   flex-shrink: 0;
 }
@@ -48,7 +51,9 @@ nav a {
   overflow-y: auto;
   width: -webkit-fill-available;
 }
-
+.edit-post {
+  padding: 15px;
+}
 .post-item {
   flex: 0 0 30%;
   margin: 10px;
@@ -106,10 +111,17 @@ div.auth-form {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 85vw;
   max-width: 400px;
 }
 .auth-input {
+  width: 80vw;
+  max-width: 375px;
+}
+#googleButton {
+  width: 85vw;
   max-width: 400px;
+  color: black;
 }
 @media (max-width: 1000px) {
   .post-item {

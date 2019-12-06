@@ -7,6 +7,7 @@ import DialogTitle from '@material-ui/core/DialogTitle'
 import CreatableSelect from 'react-select/creatable'
 import {connect} from 'react-redux'
 import {editPost} from '../store/posts'
+import PropTypes from 'prop-types'
 
 const style = {
   display: 'flex',
@@ -59,10 +60,10 @@ class EditPost extends React.Component {
         onClose={handleClose}
         aria-labelledby="form-dialog-title"
         fullWidth={true}
-        maxWidth="lg"
+        maxWidth="m"
       >
         <DialogTitle id="form-dialog-title">Edit Link preview</DialogTitle>
-        <form onSubmit={this.handleSubmit} style={style}>
+        <form onSubmit={this.handleSubmit} className="edit-post" style={style}>
           <TextField
             required
             value={this.state.title}
@@ -84,6 +85,7 @@ class EditPost extends React.Component {
             placeholder="Link Description"
             margin="normal"
           />
+          <br />
           <CreatableSelect
             isMulti
             defaultValue={this.defaultTags}
@@ -91,6 +93,7 @@ class EditPost extends React.Component {
             onChange={this.handleTags}
             options={this.tagOptions}
           />
+          <br />
           <Button color="primary" variant="outlined" type="submit">
             Submit Changes
           </Button>
@@ -113,3 +116,10 @@ const mapDispatch = dispatch => ({
   editPost: (userId, postId, post) => dispatch(editPost(userId, postId, post))
 })
 export default connect(mapState, mapDispatch)(EditPost)
+
+/**
+ * PROP TYPES
+ */
+EditPost.propTypes = {
+  tags: PropTypes.array.isRequired
+}

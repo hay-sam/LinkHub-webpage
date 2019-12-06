@@ -7,7 +7,9 @@ class Sidebar extends React.Component {
   render() {
     return (
       <div className="sidebar bg-secondary text-light">
-        <h5>Tags</h5>
+        <h5 className="tag-link">
+          Tags (<Link to="/posts">View All</Link>)
+        </h5>
         <ul>
           {this.props.tags.map(tag => (
             <li key={tag.id} className="tag-link">

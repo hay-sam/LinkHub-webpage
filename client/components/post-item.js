@@ -14,9 +14,9 @@ import Snackbar from '@material-ui/core/Snackbar'
 import {deletePost, editPost} from '../store/posts'
 
 class PostItem extends React.Component {
-  constructor(props) {
-    super(props)
-    this.post = this.props.post
+  constructor() {
+    super()
+
     this.state = {
       openDialog: false,
       openToast: false
@@ -41,15 +41,16 @@ class PostItem extends React.Component {
     this.setState({...this.state, openToast: true})
   }
   handleCopy() {
-    let success = copy(this.post.url)
+    let success = copy(this.props.post.url)
     if (success) {
       this.handleOpenToast()
     }
   }
   handleDelete() {
-    this.props.deletePost(this.props.userId, this.post.id)
+    this.props.deletePost(this.props.userId, this.props.post.id)
   }
   render() {
+    this.post = this.props.post
     const tags = this.post.tags
     return (
       <React.Fragment>

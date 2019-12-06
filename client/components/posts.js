@@ -6,6 +6,7 @@ import PostItem from './post-item'
 import Fab from '@material-ui/core/Fab'
 import AddIcon from '@material-ui/icons/Add'
 import AddPost from './add-post'
+import PropTypes from 'prop-types'
 
 const style = {
   margin: 0,
@@ -86,3 +87,7 @@ const mapDispatchToProps = dispatch => ({
 })
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Posts))
+
+Posts.propTypes = {
+  posts: PropTypes.array.isRequired
+}
