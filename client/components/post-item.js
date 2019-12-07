@@ -55,7 +55,7 @@ class PostItem extends React.Component {
     return (
       <React.Fragment>
         <Card style={{width: '18rem'}} className="post-item">
-          <a href={this.post.url}>
+          <a href={this.post.url} target="_blank" rel="noopener noreferrer">
             <Card.Img variant="top" src={this.post.image} />
           </a>
           <Card.Body>
