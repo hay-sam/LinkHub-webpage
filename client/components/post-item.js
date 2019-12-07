@@ -29,16 +29,16 @@ class PostItem extends React.Component {
     this.handleDelete = this.handleDelete.bind(this)
   }
   handleClickOpen() {
-    this.setState({...this.state, openDialog: true})
+    this.setState({openDialog: true})
   }
   handleClose() {
-    this.setState({...this.state, openDialog: false})
+    this.setState({openDialog: false})
   }
   handleCloseToast() {
-    this.setState({...this.state, openToast: false})
+    this.setState({openToast: false})
   }
   handleOpenToast() {
-    this.setState({...this.state, openToast: true})
+    this.setState({openToast: true})
   }
   handleCopy() {
     let success = copy(this.props.post.url)
