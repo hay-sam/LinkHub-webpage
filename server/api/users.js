@@ -2,8 +2,14 @@ const router = require('express').Router()
 
 const {User, Post, Tag} = require('../db/models')
 module.exports = router
-
-router.get('/:userId/tags', async (req, res, next) => {
+const isMe = (req, res, next) => {
+  if (Number(req.user.id) === Number(req.params.userId)) {
+    next()
+  } else {
+    res.status(403).send("You're not Authorized to do that...")
+  }
+}
+router.get('/:userId/tags', isMe, async (req, res, next) => {
   const user = await User.findByPk(req.params.userId)
   const info = await user.getAllTags()
   const infoObj = {}
@@ -13,7 +19,7 @@ router.get('/:userId/tags', async (req, res, next) => {
   res.status(200).send(Object.values(infoObj))
 })
 
-router.get('/:userId/posts', async (req, res, next) => {
+router.get('/:userId/posts', isMe, async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId)
     const posts = await user.getPosts({include: [{model: Tag}]})
@@ -24,7 +30,7 @@ router.get('/:userId/posts', async (req, res, next) => {
   }
 })
 
-router.post('/:userId/posts', async (req, res, next) => {
+router.post('/:userId/posts', isMe, async (req, res, next) => {
   try {
     const post = await Post.create({
       url: req.body.url,
@@ -48,7 +54,7 @@ router.post('/:userId/posts', async (req, res, next) => {
   }
 })
 
-router.put('/:userId/posts/:postId', async (req, res, next) => {
+router.put('/:userId/posts/:postId', isMe, async (req, res, next) => {
   try {
     let post = await Post.findByPk(req.params.postId)
     let postNew = await post.update(
@@ -73,7 +79,7 @@ router.put('/:userId/posts/:postId', async (req, res, next) => {
   }
 })
 
-router.delete('/:userId/posts/:postId', async (req, res, next) => {
+router.delete('/:userId/posts/:postId', isMe, async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.postId)
     await post.setTags([])
@@ -85,7 +91,7 @@ router.delete('/:userId/posts/:postId', async (req, res, next) => {
   }
 })
 
-router.get('/:userId/posts/:postId/tags', async (req, res, next) => {
+router.get('/:userId/posts/:postId/tags', isMe, async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.postId)
     let tags = await post.getTags()

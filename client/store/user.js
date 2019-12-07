@@ -27,15 +27,15 @@ export const me = () => async dispatch => {
   try {
     const res = await axios.get('/auth/me')
     dispatch(getUser(res.data || defaultUser))
-    chrome.runtime.sendMessage(
-      process.env.EXTENSION_ID,
-      {action: 'loggedIn', userId: res.data.id},
-      {includeTlsChannelId: true},
-      function(response) {
-        if (!response.success) console.log('something went wrong')
-        else console.log('success')
-      }
-    )
+    // chrome.runtime.sendMessage(
+    //   process.env.EXTENSION_ID,
+    //   {action: 'loggedIn', userId: res.data.id},
+    //   {includeTlsChannelId: true},
+    //   function(response) {
+    //     if (!response.success) console.log('something went wrong')
+    //     else console.log('success')
+    //   }
+    // )
   } catch (err) {
     console.error(err)
   }
@@ -52,15 +52,15 @@ export const auth = (email, password, method) => async dispatch => {
   try {
     dispatch(getUser(res.data))
     history.push('/posts')
-    chrome.runtime.sendMessage(
-      'ndagcihhggglnkamaoocdancfjmngfef',
-      {action: 'loggedIn', userId: res.data.id},
-      {includeTlsChannelId: true},
-      function(response) {
-        if (!response.success) console.log('something went wrong')
-        else console.log('success')
-      }
-    )
+    // chrome.runtime.sendMessage(
+    //   'ndagcihhggglnkamaoocdancfjmngfef',
+    //   {action: 'loggedIn', userId: res.data.id},
+    //   {includeTlsChannelId: true},
+    //   function(response) {
+    //     if (!response.success) console.log('something went wrong')
+    //     else console.log('success')
+    //   }
+    // )
   } catch (dispatchOrHistoryErr) {
     console.error(dispatchOrHistoryErr)
   }
@@ -71,15 +71,15 @@ export const logout = () => async dispatch => {
     await axios.post('/auth/logout')
     dispatch(removeUser())
     history.push('/login')
-    chrome.runtime.sendMessage(
-      'ndagcihhggglnkamaoocdancfjmngfef',
-      {action: 'loggedOut'},
-      {includeTlsChannelId: true},
-      function(response) {
-        if (!response.success) console.log('something went wrong')
-        else console.log('success')
-      }
-    )
+    // chrome.runtime.sendMessage(
+    //   'ndagcihhggglnkamaoocdancfjmngfef',
+    //   {action: 'loggedOut'},
+    //   {includeTlsChannelId: true},
+    //   function(response) {
+    //     if (!response.success) console.log('something went wrong')
+    //     else console.log('success')
+    //   }
+    // )
   } catch (err) {
     console.error(err)
   }

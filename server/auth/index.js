@@ -39,7 +39,11 @@ router.post('/logout', (req, res) => {
 })
 
 router.get('/me', (req, res) => {
-  res.json(req.user)
+  if (req.user) {
+    res.status(200).json(req.user)
+  } else {
+    res.sendStatus(204)
+  }
 })
 
 router.use('/google', require('./google'))
