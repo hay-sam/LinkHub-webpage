@@ -17,8 +17,8 @@ const style = {
   position: 'fixed'
 }
 class Posts extends React.Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
     this.state = {
       open: false // Is form dialog open/closed?
     }

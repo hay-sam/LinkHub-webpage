@@ -23,6 +23,17 @@ const Home = props => {
           <Link to="login">Log in</Link> or <Link to="signup">sign up</Link> to
           start growing your Hub!
         </Typography>
+        <Typography variant="subtitle1">
+          Click{' '}
+          <a
+            href="https://github.com/hay-sam/LinkHub-extension"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            here
+          </a>{' '}
+          to download the Chrome Extension!
+        </Typography>
       </div>
     </div>
   )
