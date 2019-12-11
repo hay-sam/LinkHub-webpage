@@ -2,6 +2,7 @@ const router = require('express').Router()
 const LinkPreview = require('link-preview-js')
 module.exports = router
 
+// scrape website for meta data
 router.post('/', async (req, res, next) => {
   try {
     const preview = await LinkPreview.getPreview(req.body.url)

@@ -3,6 +3,7 @@ const db = require('../db')
 
 const Tag = db.define('tag', {
   content: {
+    // The tag
     type: Sequelize.STRING,
     allowNull: false,
     unique: true,
