@@ -13,8 +13,8 @@ const style = {
   flexDirection: 'column'
 }
 class AddPost extends React.Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
       url: '',
       tags: []
@@ -24,25 +24,26 @@ class AddPost extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this)
   }
   handleChange(event) {
-    this.setState({...this.state, [event.target.name]: event.target.value})
+    this.setState({[event.target.name]: event.target.value}) //Controlled form, updates post url
   }
   handleTags(event) {
-    this.setState({...this.state, tags: event})
+    this.setState({tags: event}) //Controlled form, updates post tags
   }
   handleSubmit(event) {
     event.preventDefault()
     event.target.disabled = true
-    let tags = this.state.tags.map(tag => tag.value)
+    let tags = this.state.tags.map(tag => tag.value) // Convert from react-select option {label, value} to just the tag content
     const dispatchBody = {url: this.state.url, tags}
     this.props.addPost(this.props.userId, dispatchBody)
-    this.setState({url: '', tags: []})
-    this.props.handleClose()
+    this.setState({url: '', tags: []}) // Reset State
+    this.props.handleClose() // Close form dialog
   }
 
   render() {
     const tags = this.props.tags
     let {handleClose, open} = this.props
     let tagOptions = tags.map(tag => ({
+      // Format tags for react-select
       label: tag.content,
       value: tag.content
     }))
@@ -66,11 +67,11 @@ class AddPost extends React.Component {
             placeholder="Enter the link you'd like to save!"
             margin="normal"
           />
-          <CreatableSelect
+          <CreatableSelect //react-select, multi select, have pre-defined options, or add your own
             isMulti
             name="tags"
             onChange={this.handleTags}
-            options={tagOptions}
+            options={tagOptions} // Pre-defined options (not-selected)
           />
           <Button color="primary" variant="outlined" type="submit">
             Save Link

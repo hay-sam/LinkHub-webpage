@@ -17,28 +17,31 @@ const style = {
   position: 'fixed'
 }
 class Posts extends React.Component {
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = {
-      open: false
+      open: false // Is form dialog open/closed?
     }
-    this.handleClickOpen = this.handleClickOpen.bind(this)
+    this.handleClickOpen = this.handleClickOpen.bind(this) // Handle open/closing of form dialog
     this.handleClose = this.handleClose.bind(this)
   }
   componentDidMount() {
     this.props.getPosts(this.props.userId)
   }
   handleClickOpen() {
-    this.setState({open: true})
+    this.setState({open: true}) // Open dialog
   }
   handleClose() {
-    this.setState({open: false})
+    this.setState({open: false}) // Close dialog
   }
   render() {
     let {posts} = this.props
     if (this.props.match.params.tagContent) {
+      // Get tag content from URI
       posts = posts.filter(post => {
+        // Only show posts containing the specified tag
         return post.tags.some(tag => {
+          // Breaks once tag is found
           return tag.content === this.props.match.params.tagContent
         })
       })
@@ -57,7 +60,7 @@ class Posts extends React.Component {
             </h4>
           </div>
         )}
-
+        {/* Floating action button */}
         <Fab
           color="primary"
           aria-label="add"
@@ -86,7 +89,7 @@ const mapDispatchToProps = dispatch => ({
   getPosts: id => dispatch(getPosts(id))
 })
 
-export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Posts))
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Posts)) // Gives access to history and other router props (match.params, location)
 
 Posts.propTypes = {
   posts: PropTypes.array.isRequired

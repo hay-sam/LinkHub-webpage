@@ -38,7 +38,7 @@ export const getPosts = userId => {
 }
 
 export const addPost = (userId, post) => {
-  return async (dispatch, state) => {
+  return async dispatch => {
     const {data} = await axios.post(`/api/users/${userId}/posts`, post)
     dispatch(addedPost(data))
     dispatch(getTags(userId))
@@ -46,7 +46,7 @@ export const addPost = (userId, post) => {
 }
 
 export const editPost = (userId, postId, post) => {
-  return async (dispatch, state) => {
+  return async dispatch => {
     const {data} = await axios.put(`/api/users/${userId}/posts/${postId}`, post)
     dispatch(editedPost(data))
     dispatch(getTags(userId))
@@ -54,7 +54,7 @@ export const editPost = (userId, postId, post) => {
 }
 
 export const deletePost = (userId, postId) => {
-  return async (dispatch, state) => {
+  return async dispatch => {
     await axios.delete(`/api/users/${userId}/posts/${postId}`)
     dispatch(deletedPost(postId))
     dispatch(getTags(userId))

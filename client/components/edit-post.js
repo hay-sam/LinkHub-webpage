@@ -16,12 +16,14 @@ const style = {
 class EditPost extends React.Component {
   constructor(props) {
     super(props)
-    this.postTags = this.props.post.tags
+    this.postTags = this.props.post.tags // Reassigned for cleaner code
     this.tagOptions = this.props.tags.map(tag => ({
+      // Format tags to use as react-select options
       label: tag.content,
       value: tag.content
     }))
     this.defaultTags = this.tagOptions.filter(tagObj => {
+      // Object with pre-selected tags to use with react-select
       return this.postTags.findIndex(tag => tag.content === tagObj.value) >= 0
     })
     this.handleChange = this.handleChange.bind(this)
@@ -34,22 +36,22 @@ class EditPost extends React.Component {
     }
   }
   handleChange(event) {
-    this.setState({...this.state, [event.target.name]: event.target.value})
+    this.setState({[event.target.name]: event.target.value}) // Update title and description
   }
   handleTags(event) {
-    this.setState({...this.state, tags: event})
+    this.setState({tags: event}) // Update tags
   }
   handleSubmit(event) {
     event.preventDefault()
     event.target.disabled = true
-    let tags = this.state.tags.map(tag => tag.value)
+    let tags = this.state.tags.map(tag => tag.value) // Reformat tags from the react-select tag option
     const dispatchBody = {
       title: this.state.title,
       description: this.state.description,
       tags
     }
     this.props.editPost(this.props.userId, this.props.post.id, dispatchBody)
-    this.props.handleClose()
+    this.props.handleClose() // State of form dialog managed by parent. Close form when done.
   }
 
   render() {
@@ -86,12 +88,12 @@ class EditPost extends React.Component {
             margin="normal"
           />
           <br />
-          <CreatableSelect
+          <CreatableSelect // Allows for multi-select, pre-defined options, and add your own options
             isMulti
-            defaultValue={this.defaultTags}
+            defaultValue={this.defaultTags} // Pre-selected tags
             name="tags"
             onChange={this.handleTags}
-            options={this.tagOptions}
+            options={this.tagOptions} // All pre-made tag options
           />
           <br />
           <Button color="primary" variant="outlined" type="submit">
