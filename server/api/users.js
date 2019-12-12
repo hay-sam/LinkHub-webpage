@@ -66,6 +66,8 @@ router.post('/:userId/posts', isMe, async (req, res, next) => {
 router.put('/:userId/posts/:postId', isMe, async (req, res, next) => {
   try {
     let post = await Post.findByPk(req.params.postId) // Update fields on Post attribute
+    if (post.userId !== req.user.id)
+      res.status(403).send("You're not Authorized to do that...")
     let postNew = await post.update(
       {title: req.body.title, description: req.body.description},
       {fields: ['title', 'description']}
@@ -93,21 +95,11 @@ router.put('/:userId/posts/:postId', isMe, async (req, res, next) => {
 router.delete('/:userId/posts/:postId', isMe, async (req, res, next) => {
   try {
     const post = await Post.findByPk(req.params.postId)
+    if (post.userId !== req.user.id)
+      res.status(403).send("You're not Authorized to do that...")
     await post.setTags([]) // Remove all tags for a post from the through postTags through table
     await post.destroy() // Remove post from posts table
     res.sendStatus(201)
-  } catch (err) {
-    console.error(err)
-    next(err)
-  }
-})
-
-// Get tags for a specific post
-router.get('/:userId/posts/:postId/tags', isMe, async (req, res, next) => {
-  try {
-    const post = await Post.findByPk(req.params.postId)
-    let tags = await post.getTags()
-    res.status(201).send(tags)
   } catch (err) {
     console.error(err)
     next(err)

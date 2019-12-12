@@ -6,7 +6,6 @@ const db = require('../db')
 const app = require('../index')
 const agent = supertest.agent(app)
 const User = db.model('user')
-const Post = db.model('post')
 
 describe('User routes', () => {
   beforeEach(() => {
@@ -111,8 +110,7 @@ describe('User routes', () => {
         await agent.get('/api/users/2/tags').expect(403)
       })
     })
-
-    describe('GET /api/users/:userId/tags', () => {
+    describe('PUT /api/users/:userId/posts/:postId', () => {
       beforeEach(async () => {
         await agent
           .post('/auth/login')
@@ -121,36 +119,72 @@ describe('User routes', () => {
           url: 'https://podium--app.herokuapp.com/',
           tags: ['a', 'post']
         })
+      })
+
+      it("updates a post's title", async () => {
+        let res = await agent
+          .put('/api/users/1/posts/1')
+          .send({
+            title: 'New Title',
+            description:
+              'Podium is a personalized solution designed to polish speaking ability and elevate confidence.',
+            tags: ['a', 'post']
+          })
+          .expect(201)
+
+        expect(res.body).to.be.an('object')
+        expect(res.body.title).to.be.equal('New Title')
+      })
+      it("updates a post's description", async () => {
+        let res = await agent
+          .put('/api/users/1/posts/1')
+          .send({
+            title: 'Podium',
+            description: 'A much shorter description',
+            tags: ['a', 'post']
+          })
+          .expect(201)
+
+        expect(res.body).to.be.an('object')
+        expect(res.body.description).to.be.equal('A much shorter description')
+      })
+      it("updates a post's tags", async () => {
+        let res = await agent
+          .put('/api/users/1/posts/1')
+          .send({
+            title: 'Podium',
+            description:
+              'Podium is a personalized solution designed to polish speaking ability and elevate confidence.',
+            tags: ['post', 'with', 'new', 'tags']
+          })
+          .expect(201)
+
+        expect(res.body).to.be.an('object')
+        expect(res.body.tags.length).to.be.equal(4)
+      })
+      it('will not update a post for not authorized user', async () => {
+        await agent
+          .put('/api/users/2/posts/1')
+          .send({title: 'Changed', description: 'Different', tags: ['sup']})
+          .expect(403)
+      })
+    })
+    describe('DELETE /api/users/:userId/posts/:postId', () => {
+      beforeEach(async () => {
+        await agent
+          .post('/auth/login')
+          .send({email: 'cody@email.com', password: '123'})
         await agent.post('/api/users/1/posts').send({
-          url: 'https://link--hub.herokuapp.com/posts/#',
-          tags: ['cool', 'project', 'wow', 'post']
-        })
-        await agent.post('/api/users/1/posts').send({
-          url:
-            'https://www.averiecooks.com/softbatch-no-roll-holiday-sprinkles-cookies/',
-          tags: ['tags']
-        })
-        await agent.post('/api/users/1/posts').send({
-          url: 'https://coolors.co/5a9367-5cab7d-4adbc8-514f59-1d1128',
-          tags: ['wow', 'colors', 'tags']
+          url: 'https://podium--app.herokuapp.com/',
+          tags: ['a', 'post']
         })
       })
 
-      it("returns a an array with a user's tags", async () => {
-        const res = await agent.get('/api/users/1/tags').expect(200)
-
-        expect(res.body).to.be.an('array')
-        expect(res.body.length).to.be.equal(7)
+      it('deletes a post by id', async () => {
+        await agent.delete('/api/users/1/posts/1').expect(201)
       })
-      it('contains only unique values', async () => {
-        const res = await agent.get('/api/users/1/tags').expect(200)
-        let unique = new Set(res.body)
-        expect(res.body).to.be.an('array')
-        expect(res.body.length).to.be.equal(7)
-        expect(res.body.length).to.be.equal(unique.size)
-      })
-      it('will not return the tags for a not the signed in user', async () => {
-        await agent.get('/api/users/2/tags').expect(403)
+      it('will not delete a post for not authorized user', async () => {
+        await agent.delete('/api/users/2/posts/1').expect(403)
       })
     })
   }) // end describe('/api/users/:userId/posts')
