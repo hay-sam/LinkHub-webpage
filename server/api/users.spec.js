@@ -13,7 +13,7 @@ describe('User routes', () => {
     return db.sync({force: true})
   })
 
-  describe('/api/users/:userid/', () => {
+  describe('/api/users/:userid/posts', () => {
     const codysEmail = 'cody@email.com'
     const murphysEmail = 'murphy@email.com'
 
@@ -153,5 +153,61 @@ describe('User routes', () => {
         await agent.get('/api/users/2/tags').expect(403)
       })
     })
-  }) // end describe('/api/users')
+  }) // end describe('/api/users/:userId/posts')
+  describe('/api/users/:userid/tags', () => {
+    const codysEmail = 'cody@email.com'
+    const murphysEmail = 'murphy@email.com'
+
+    beforeEach(async () => {
+      await User.create({
+        email: codysEmail,
+        password: '123'
+      })
+      await User.create({
+        email: murphysEmail,
+        password: '123'
+      })
+    })
+    describe('GET /api/users/:userId/tags', () => {
+      beforeEach(async () => {
+        await agent
+          .post('/auth/login')
+          .send({email: 'cody@email.com', password: '123'})
+        await agent.post('/api/users/1/posts').send({
+          url: 'https://podium--app.herokuapp.com/',
+          tags: ['a', 'post']
+        })
+        await agent.post('/api/users/1/posts').send({
+          url: 'https://link--hub.herokuapp.com/posts/#',
+          tags: ['cool', 'project', 'wow', 'post']
+        })
+        await agent.post('/api/users/1/posts').send({
+          url:
+            'https://www.averiecooks.com/softbatch-no-roll-holiday-sprinkles-cookies/',
+          tags: ['tags']
+        })
+        await agent.post('/api/users/1/posts').send({
+          url: 'https://coolors.co/5a9367-5cab7d-4adbc8-514f59-1d1128',
+          tags: ['wow', 'colors', 'tags']
+        })
+      })
+
+      it("returns a an array with a user's tags", async () => {
+        const res = await agent.get('/api/users/1/tags').expect(200)
+
+        expect(res.body).to.be.an('array')
+        expect(res.body.length).to.be.equal(7)
+      })
+      it('contains only unique values', async () => {
+        const res = await agent.get('/api/users/1/tags').expect(200)
+        let unique = new Set(res.body)
+        expect(res.body).to.be.an('array')
+        expect(res.body.length).to.be.equal(7)
+        expect(res.body.length).to.be.equal(unique.size)
+      })
+      it('will not return the tags for a not the signed in user', async () => {
+        await agent.get('/api/users/2/tags').expect(403)
+      })
+    })
+  }) // end describe('/api/users/:userId/tags')
 }) // end describe('User routes')
